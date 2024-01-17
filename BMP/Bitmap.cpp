@@ -31,6 +31,11 @@ namespace BMP {
 	}
 
 	void Bitmap::setPixel(int x, int y, uint8_t red, uint8_t blue, uint8_t green) {
+		uint8_t* pPixel = _pPixelData.get();
+		pPixel += 3 * (y * _width + x);
 
+		pPixel[0] = blue;
+		pPixel[1] = green;
+		pPixel[2] = red;
 	}
 }
