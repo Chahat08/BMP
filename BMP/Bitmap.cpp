@@ -4,24 +4,24 @@
 #include "BMPFileHeader.h"
 
 namespace BMP {
-	bool Bitmap::write(std::string filename) {
+	bool Bitmap::write(std::string filepath) {
 		BMP::BMPInfoHeader bmpInfoHeader;
 		BMP::BMPFileHeader bmpFileHeader;
 
 		// setting the deterministic fields in bmpFileHeader
-		bmpFileHeader.fileSize = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader) + sizeof(this);
+		bmpFileHeader.fileSize = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader) + _width * _height * 3;
 		bmpFileHeader.dataOffset = sizeof(BMPFileHeader) + sizeof(BMPInfoHeader);
 
 		// setting the deterministic fields in bmpInfoHeader
 		bmpInfoHeader.biWidth = _width;
 		bmpInfoHeader.biHeight = _height;
 
-		std::fstream file(filename, std::ios::out|std::ios::binary);
+		std::fstream file(filepath, std::ios::out|std::ios::binary);
 
 		if (file.is_open()) {
 			file.write((char*)&bmpFileHeader, sizeof(bmpFileHeader));
 			file.write((char*)&bmpInfoHeader, sizeof(bmpInfoHeader));
-			file.write((char*)_pPixelData.get(), sizeof(_pPixelData));
+			file.write((char*)_pPixelData.get(), _width * _height * 3);
 		}
 		else return false;
 

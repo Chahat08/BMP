@@ -19,7 +19,7 @@ namespace BMP {
 		~Bitmap() {};
 
 		// utils
-		bool write(std::string filename);
+		bool write(std::string filepath);
 		void setPixel(int x, int y, uint8_t red, uint8_t blue, uint8_t green);
 
 	};
